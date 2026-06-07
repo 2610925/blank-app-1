@@ -1,49 +1,21 @@
 import streamlit as st
 
-st.title("햄버거 키오스크")
+st.title("인공지능 진로 추천 프로그램")
 
-# 리스트
-menu_list = ["불고기버거", "치즈버거", "새우버거", "치킨버거"]
-price_list = [4500, 5000, 5500, 6000]
+choice = st.selectbox(
+    "관심 분야를 선택하세요",
+    ["인공지능 개발", "로봇", "AI 서비스"]
+)
 
-# 장바구니 초기화
-if "cart" not in st.session_state:
-    st.session_state.cart = []
+if choice == "인공지능 개발":
+    jobs = ["인공지능 개발자", "머신러닝 엔지니어", "데이터 과학자"]
 
-# 메뉴 출력 (반복문 사용)
-st.subheader("메뉴")
-for i in range(len(menu_list)):
-    st.write(f"{i+1}. {menu_list[i]} - {price_list[i]}원")
+elif choice == "로봇":
+    jobs = ["로봇 개발자", "자율주행 엔지니어", "로봇 연구원"]
 
-# 메뉴 선택
-menu = st.selectbox("주문할 메뉴를 선택하세요", menu_list)
+else:
+    jobs = ["AI 서비스 기획자", "챗봇 개발자", "AI 컨설턴트"]
 
-# 장바구니 담기
-if st.button("장바구니 담기"):
-    st.session_state.cart.append(menu)
-    st.success(f"{menu}가 장바구니에 추가되었습니다.")
-
-# 장바구니 출력
-st.subheader("장바구니")
-
-total = 0
-
-# 반복문 사용
-for item in st.session_state.cart:
-    index = menu_list.index(item)
-    st.write(f"- {item} ({price_list[index]}원)")
-    total += price_list[index]
-
-st.write(f"총 금액: {total}원")
-
-# 결제
-money = st.number_input("지불할 금액을 입력하세요", min_value=0, step=100)
-
-if st.button("결제하기"):
-
-    # 조건문 사용
-    if money >= total:
-        st.success("결제가 완료되었습니다!")
-        st.write(f"거스름돈: {money - total}원")
-    else:
-        st.error(f"금액이 부족합니다. {total - money}원이 더 필요합니다.")
+st.write("추천 직업")
+for job in jobs:
+    st.write("-", job)
